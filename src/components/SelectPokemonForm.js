@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import useFetch from '../hooks/useFetch';
+import useAxios from '../hooks/useAxios';
 
-function SelectPokemonForm({ pokemonList, isLoading })
+function SelectPokemonForm({ selectedPokemon, pokemonList, isLoading })
 {
     //base url for repo of pokemon PC icons!
     let baseIconUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/icons/";
@@ -15,6 +15,18 @@ function SelectPokemonForm({ pokemonList, isLoading })
         }
     }
 
+    const [setUrl, data, loading, setLoading, error] = useAxios();
+
+    //pokemon 
+    let specificPokemonUrl = "https://pokeapi.co/api/v2/pokemon-species/";
+    function getSelectedPokemon (pokeId)
+    {
+        setUrl(specificPokemonUrl+pokeId);
+        setLoading(true);
+        console.log(pokeId);
+        console.log(data);
+    }
+
     if (isLoading)
     {
         return(
@@ -25,9 +37,9 @@ function SelectPokemonForm({ pokemonList, isLoading })
     {
         return(
             <>
-                {arrayOfIconLinks.map((link)=>{
+                {arrayOfIconLinks.map((link, index)=>{
                     return(
-                        <img src={link} />
+                        <img id={index+1} src={link} onClick={()=>getSelectedPokemon(index+1)}/>
                     )
                 })}
             </>

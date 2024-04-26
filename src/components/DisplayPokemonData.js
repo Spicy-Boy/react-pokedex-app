@@ -1,15 +1,14 @@
 import React, {useState} from 'react';
 
-function DisplayPokemonData({prop})
+function DisplayPokemonData()
 {
-    console.log('Inside DisplayPokemonData');
     // const {pokeData} = props;
 
     // console.log(pokeData);
 
     return(
         <>
-            hi
+            POKEMON DATA WILL GO HERE!
         </>
     );
 }

@@ -4,6 +4,7 @@ import useFetch from './hooks/useFetch';
 import useAxios from './hooks/useAxios';
 import DisplayPokemonData from './components/DisplayPokemonData'
 import SelectPokemonForm from './components/SelectPokemonForm'
+import React, { useEffect, useState } from 'react';
 
 function App() {
 
@@ -19,13 +20,21 @@ function App() {
   function handleOnSubmit(e){
     // prevent from refreshing the page
     e.preventDefault();
-    setUrl(pokemonListUrl);
-    setLoading(true);
+    console.log(selectedPokemon);
   }
+
+  //runs ONCE on page load
+  useEffect(() => {
+    // Code here will run only once when the component mounts.
+    setUrl(pokemonListUrl);
+    setLoading(true); //setLoading causes the useAxios hook to run at the setUrl
+  }, []);
+
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
 
   return (
     <div className="App">
-      <SelectPokemonForm pokemonList={data} isLoading={loading}/>
+      <SelectPokemonForm selectedPokemon={selectedPokemon} pokemonList={data} isLoading={loading}/>
       <hr/>
       <DisplayPokemonData />
       <hr/>
