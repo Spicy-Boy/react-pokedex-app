@@ -1,33 +1,35 @@
 import React, {useState} from 'react';
 import useFetch from '../hooks/useFetch';
 
-function SelectPokemonForm()
+function SelectPokemonForm({ pokemonList, isLoading })
 {
     //base url for repo of pokemon PC icons!
     let baseIconUrl = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-vii/icons/";
 
-    //the poke list goes up to 493, the Sinnoh Dex
-    const pokemonListUrl = "https://pokeapi.co/api/v2/pokemon/?limit=493";
-    const [pokemonList, isLoading] = useFetch(pokemonListUrl);
-    
     const arrayOfIconLinks = [];
-
-    for (let i = 0; i < pokemonList.length; i++)
+    if (pokemonList)
     {
-        arrayOfIconLinks += baseIconUrl+i+".png";
+        for (let i = 1; i <= pokemonList.results.length; i++)
+        {
+            arrayOfIconLinks.push(baseIconUrl+i+".png");
+        }
     }
 
     if (isLoading)
     {
         return(
-            <h1>LOADING!!!!</h1>
+            <h4>Loading...</h4>
         );
     }
-    else
+    else if (pokemonList)
     {
         return(
             <>
-                {JSON.stringify(pokemonList)}
+                {arrayOfIconLinks.map((link)=>{
+                    return(
+                        <img src={link} />
+                    )
+                })}
             </>
         );
     }
