@@ -1,6 +1,11 @@
+import React, {useState} from 'react';
 
-function DisplayPokemonData()
+function DisplayPokemonData({prop})
 {
+    // const {pokeData} = props;
+
+    // console.log(pokeData);
+
     return(
         <>
             hi
